@@ -1,0 +1,80 @@
+[
+  {
+    "id": "horarios",
+    "titulo": "Horarios de atención",
+    "claves": ["horario", "horarios", "abren", "abre", "abierto", "cierran", "cierra", "cerrado", "atienden", "atencion", "hasta que hora", "a que hora", "estan abiertos", "trabajan hoy"],
+    "respuesta": "🕗 *Horarios de {{nombre}}*\n{{horarios}}\n\n{{estadoActual}}"
+  },
+  {
+    "id": "menu",
+    "titulo": "Carta / menú",
+    "claves": ["menu", "carta", "que tienen", "que venden", "variedades", "gustos", "sabores", "lista de precios", "precios", "cuanto sale", "cuanto cuesta", "valor", "pizzas tienen"],
+    "respuesta": "{{menu}}"
+  },
+  {
+    "id": "delivery",
+    "titulo": "Envíos a domicilio",
+    "claves": ["delivery", "envio", "envios", "reparto", "llevan", "mandan", "a domicilio", "traen", "reparten", "zona", "zonas", "cuanto sale el envio", "costo de envio"],
+    "respuesta": "🛵 *Envíos a domicilio*\n{{zonas}}\n\nPedido mínimo para delivery: {{minimoDelivery}}.\nDemora estimada: {{demoraDelivery}}.\n\nSi tu zona no está en la lista, escribime la dirección y te confirmo."
+  },
+  {
+    "id": "demora",
+    "titulo": "Demoras",
+    "claves": ["demora", "demoran", "tardan", "tarda", "cuanto tiempo", "cuanto falta", "rapido", "listo en cuanto", "espera"],
+    "respuesta": "⏱️ *Tiempos aproximados*\n• Retiro por el local: {{demoraMostrador}}\n• Delivery: {{demoraDelivery}}\n\nLos viernes y sábados a la noche puede estirarse un poco por la demanda."
+  },
+  {
+    "id": "pagos",
+    "titulo": "Medios de pago",
+    "claves": ["pago", "pagos", "pagar", "tarjeta", "debito", "credito", "efectivo", "transferencia", "mercado pago", "mercadopago", "qr", "cuotas", "aceptan tarjeta"],
+    "respuesta": "💳 *Medios de pago*\n{{mediosPago}}\n\nEl cobro lo hace la caja: si es delivery, se abona al recibir el pedido; si retirás, en el mostrador."
+  },
+  {
+    "id": "direccion",
+    "titulo": "Dirección del local",
+    "claves": ["donde estan", "direccion", "ubicacion", "ubicados", "como llego", "local", "sucursal", "mapa", "en que calle"],
+    "respuesta": "📍 Estamos en *{{direccion}}*.\nTel: {{telefono}}\n\nTe esperamos 😄"
+  },
+  {
+    "id": "promos",
+    "titulo": "Promociones",
+    "claves": ["promo", "promos", "promocion", "promociones", "oferta", "ofertas", "descuento", "combo", "combos", "2x1"],
+    "respuesta": "{{promos}}"
+  },
+  {
+    "id": "reservas",
+    "titulo": "Mesas y reservas",
+    "claves": ["reserva", "reservar", "mesa", "mesas", "salon", "comer ahi", "para cuantas personas", "lugar"],
+    "respuesta": "🍽️ Tenemos salón con mesas, sin necesidad de reservar de lunes a jueves.\nPara viernes, sábados o grupos de más de 6 personas conviene reservar: te paso con alguien del local para coordinarlo. Escribime *reservar* y te contacto con la caja."
+  },
+  {
+    "id": "celiaco",
+    "titulo": "Sin TACC y vegetariano",
+    "claves": ["celiaco", "celiaca", "sin tacc", "gluten", "vegetariano", "vegetariana", "vegano", "vegana", "sin carne", "apto celiaco"],
+    "respuesta": "🌱 *Opciones especiales*\n• Vegetarianas: muzzarella, napolitana, fugazzeta, cuatro quesos y empanada de verdura.\n• Sin TACC: tenemos prepizza sin TACC (consultar stock del día, tiene un adicional).\n\n⚠️ Trabajamos con harina en la cocina, así que no podemos garantizar cero contaminación cruzada."
+  },
+  {
+    "id": "eventos",
+    "titulo": "Pedidos grandes y eventos",
+    "claves": ["evento", "eventos", "cumpleanos", "catering", "pedido grande", "muchas pizzas", "empresa", "oficina", "fiesta"],
+    "respuesta": "🎉 Para cumpleaños, oficinas o pedidos grandes armamos presupuesto especial.\nDecime *fecha, cantidad de personas y zona* y le paso el dato a la caja para que te contacten con el presupuesto."
+  },
+  {
+    "id": "estado-pedido",
+    "titulo": "Estado de un pedido",
+    "claves": ["mi pedido", "estado del pedido", "ya salio", "donde esta mi pedido", "hace rato que pedi", "no llego", "sigue demorando"],
+    "respuesta": "🔎 Dejame chequear con la caja el estado de tu pedido. Ya te aviso por acá."
+  },
+  {
+    "id": "saludo",
+    "titulo": "Saludo",
+    "claves": ["hola", "buenas", "buenas tardes", "buenas noches", "buen dia", "que tal", "holis", "hey"],
+    "respuesta": "¡Hola! 👋 Soy el asistente de *{{nombre}}*.\n\nPuedo ayudarte con:\n• 🍕 *Menú* y precios\n• 🕗 *Horarios*\n• 🛵 *Envíos* y zonas\n• 💳 *Medios de pago*\n• 🎉 *Promos*\n\nY si querés, tomo tu pedido: escribime *quiero pedir*."
+  },
+  {
+    "id": "gracias",
+    "titulo": "Agradecimiento",
+    "claves": ["gracias", "muchas gracias", "genial", "perfecto", "buenisimo", "dale gracias"],
+    "respuesta": "¡De nada! 🍕 Cualquier cosa escribime. Si querés hacer un pedido, mandame *quiero pedir*."
+  }
+]

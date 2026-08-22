@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Caja · Pedidos de WhatsApp</title>
+  <link rel="stylesheet" href="/estilos.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>" />
+</head>
+<body>
+  <!-- Ingreso -->
+  <div class="ingreso" id="ingreso">
+    <form id="formIngreso">
+      <h1 style="margin:0;font-size:20px">🍕 Panel de caja</h1>
+      <p style="margin:0;color:var(--suave);font-size:13px">Ingresá la clave del local para ver los pedidos que llegan por WhatsApp.</p>
+      <input type="password" id="clave" placeholder="Clave" autocomplete="current-password" required />
+      <div class="error" id="errorIngreso"></div>
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+
+  <!-- Tablero -->
+  <div id="tablero" class="oculto">
+    <header class="barra">
+      <div class="marca">
+        🍕 <div>Caja<small id="nombreNegocio">—</small></div>
+      </div>
+
+      <div class="metricas">
+        <div class="metrica"><b id="mPendientes">0</b><span>Pendientes</span></div>
+        <div class="metrica"><b id="mTotal">0</b><span>Pedidos hoy</span></div>
+        <div class="metrica"><b id="mCobrados">0</b><span>Cobrados</span></div>
+        <div class="metrica"><b id="mFacturado">$ 0</b><span>Facturado</span></div>
+      </div>
+
+      <div class="acciones-barra">
+        <button class="chip" id="btnSonido" title="Alerta sonora al entrar un pedido">🔔 Sonido</button>
+        <span class="chip" id="conexion">Conectando…</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>Pedidos</h2>
+        <div class="filtros" id="filtros">
+          <button data-filtro="activos" class="activo">Activos</button>
+          <button data-filtro="nuevo">Nuevos</button>
+          <button data-filtro="todos">Todos</button>
+        </div>
+        <div class="lista" id="listaPedidos"></div>
+      </section>
+
+      <section>
+        <h2>Consultas para atender</h2>
+        <div class="lista" id="listaAvisos"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Conversación -->
+  <aside class="cajon" id="cajon">
+    <header>
+      <div>
+        <strong id="cajonNombre">Conversación</strong>
+        <div class="cliente" id="cajonTelefono"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="chip" id="btnBot">bot</button>
+        <button class="chip" id="btnCerrarCajon">✕</button>
+      </div>
+    </header>
+    <div class="charla" id="charla"></div>
+    <div class="redactar">
+      <textarea id="mensaje" placeholder="Escribile al cliente por WhatsApp…"></textarea>
+      <button id="btnEnviar">Enviar</button>
+    </div>
+  </aside>
+
+  <script src="/caja.js"></script>
+</body>
+</html>

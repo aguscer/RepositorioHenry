@@ -1,0 +1,28 @@
+{
+  "nombre": "Pizzería Don Henry",
+  "direccion": "Av. Siempreviva 742, Local 3",
+  "telefono": "+54 9 11 5555-5555",
+  "moneda": "$",
+  "zonaHoraria": "America/Argentina/Buenos_Aires",
+  "horarios": {
+    "lunes": null,
+    "martes": [["19:00", "23:30"]],
+    "miercoles": [["19:00", "23:30"]],
+    "jueves": [["19:00", "23:30"]],
+    "viernes": [["19:00", "00:30"]],
+    "sabado": [["12:00", "15:00"], ["19:00", "00:30"]],
+    "domingo": [["19:00", "23:30"]]
+  },
+  "demoraMostrador": "20 a 30 minutos",
+  "demoraDelivery": "35 a 50 minutos",
+  "minimoDelivery": 6000,
+  "zonasEnvio": [
+    { "nombre": "Centro", "costo": 800 },
+    { "nombre": "Barrio Norte", "costo": 1200 },
+    { "nombre": "Villa Sur", "costo": 1500 }
+  ],
+  "mediosPago": ["Efectivo", "Transferencia", "Débito", "Crédito", "Mercado Pago"],
+  "cajeros": [
+    { "nombre": "Caja mostrador", "telefono": "" }
+  ]
+}

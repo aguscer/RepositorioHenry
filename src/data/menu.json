@@ -1,0 +1,48 @@
+{
+  "categorias": [
+    {
+      "id": "pizzas",
+      "nombre": "Pizzas",
+      "items": [
+        { "id": "muzzarella", "nombre": "Muzzarella", "descripcion": "Salsa, muzzarella y aceitunas", "precio": 7500, "alias": ["muza", "mozzarella", "muzza"], "aptoVegetariano": true },
+        { "id": "napolitana", "nombre": "Napolitana", "descripcion": "Muzzarella, tomate y ajo", "precio": 8500, "alias": ["napo"], "aptoVegetariano": true },
+        { "id": "fugazzeta", "nombre": "Fugazzeta", "descripcion": "Cebolla y muzzarella", "precio": 8900, "alias": ["fugaza", "fugazeta"], "aptoVegetariano": true },
+        { "id": "calabresa", "nombre": "Calabresa", "descripcion": "Muzzarella y longaniza calabresa", "precio": 9200, "alias": ["calabresa picante"] },
+        { "id": "jamon-morrones", "nombre": "Jamón y morrones", "descripcion": "Muzzarella, jamón cocido y morrones", "precio": 9500, "alias": ["jamon", "jyq", "jamon y morron"] },
+        { "id": "cuatro-quesos", "nombre": "Cuatro quesos", "descripcion": "Muzzarella, roquefort, provolone y parmesano", "precio": 10500, "alias": ["4 quesos"], "aptoVegetariano": true },
+        { "id": "especial-casa", "nombre": "Especial de la casa", "descripcion": "Muzzarella, jamón crudo, rúcula y parmesano", "precio": 11500, "alias": ["especial", "de la casa"] }
+      ]
+    },
+    {
+      "id": "empanadas",
+      "nombre": "Empanadas (unidad)",
+      "items": [
+        { "id": "emp-carne", "nombre": "Empanada de carne", "descripcion": "Carne cortada a cuchillo", "precio": 1400, "alias": ["empanada carne"] },
+        { "id": "emp-jyq", "nombre": "Empanada de jamón y queso", "descripcion": "", "precio": 1400, "alias": ["empanada jamon y queso", "jyq"] },
+        { "id": "emp-verdura", "nombre": "Empanada de verdura", "descripcion": "Acelga y salsa blanca", "precio": 1400, "alias": ["empanada verdura"], "aptoVegetariano": true }
+      ]
+    },
+    {
+      "id": "bebidas",
+      "nombre": "Bebidas",
+      "items": [
+        { "id": "gaseosa-15", "nombre": "Gaseosa 1.5 L", "descripcion": "Línea Coca-Cola", "precio": 3200, "alias": ["coca", "gaseosa grande", "sprite", "fanta"] },
+        { "id": "gaseosa-lata", "nombre": "Gaseosa lata", "descripcion": "354 ml", "precio": 1800, "alias": ["lata"] },
+        { "id": "cerveza", "nombre": "Cerveza 1 L", "descripcion": "Rubia", "precio": 4200, "alias": ["birra", "quilmes"] },
+        { "id": "agua", "nombre": "Agua 500 ml", "descripcion": "Con o sin gas", "precio": 1500, "alias": ["agua mineral"] }
+      ]
+    },
+    {
+      "id": "postres",
+      "nombre": "Postres",
+      "items": [
+        { "id": "flan", "nombre": "Flan casero", "descripcion": "Con dulce de leche o crema", "precio": 3500, "alias": [] },
+        { "id": "tiramisu", "nombre": "Tiramisú", "descripcion": "Porción individual", "precio": 4500, "alias": ["tiramisu"] }
+      ]
+    }
+  ],
+  "promos": [
+    { "id": "promo-martes", "nombre": "Martes de muzza", "descripcion": "2 pizzas de muzzarella", "precio": 12500, "dias": ["martes"] },
+    { "id": "promo-familiar", "nombre": "Combo familiar", "descripcion": "2 pizzas grandes + 12 empanadas + gaseosa 1.5 L", "precio": 32000, "dias": [] }
+  ]
+}
