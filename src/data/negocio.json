@@ -1,18 +1,18 @@
 {
-  "_pendiente": "FALTA CONFIRMAR: horarios de apertura y cierre de cada día, zonas de reparto con su costo, pedido mínimo de delivery y medios de pago. Los valores de abajo son provisorios.",
+  "_pendiente": "FALTA CONFIRMAR: la carta con sus precios, las zonas de reparto con su costo, el pedido mínimo de delivery y los medios de pago. El resto ya son datos reales del local.",
   "nombre": "Pizzería Vikings",
   "direccion": "San Martín 5096, Neuquén",
-  "telefono": "+54 299 412-8606",
+  "telefono": "+54 9 299 412-8606",
   "moneda": "$",
   "zonaHoraria": "America/Argentina/Salta",
   "horarios": {
     "lunes": null,
-    "martes": [["20:00", "00:00"]],
-    "miercoles": [["20:00", "00:00"]],
-    "jueves": [["20:00", "00:00"]],
-    "viernes": [["20:00", "00:00"]],
-    "sabado": [["20:00", "00:00"]],
-    "domingo": [["20:00", "00:00"]]
+    "martes": [["20:00", "00:30"]],
+    "miercoles": [["20:00", "00:30"]],
+    "jueves": [["20:00", "00:30"]],
+    "viernes": [["20:00", "00:30"]],
+    "sabado": [["20:00", "00:30"]],
+    "domingo": [["20:00", "00:30"]]
   },
   "demoraMostrador": "20 a 30 minutos",
   "demoraDelivery": "35 a 50 minutos",
