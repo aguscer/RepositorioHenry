@@ -1,17 +1,18 @@
 {
+  "_pendiente": "FALTA CONFIRMAR: horarios de apertura y cierre de cada día, zonas de reparto con su costo, pedido mínimo de delivery y medios de pago. Los valores de abajo son provisorios.",
   "nombre": "Pizzería Vikings",
-  "direccion": "Av. Siempreviva 742, Local 3",
-  "telefono": "+54 9 11 5555-5555",
+  "direccion": "San Martín 5096, Neuquén",
+  "telefono": "+54 299 412-8606",
   "moneda": "$",
-  "zonaHoraria": "America/Argentina/Buenos_Aires",
+  "zonaHoraria": "America/Argentina/Salta",
   "horarios": {
     "lunes": null,
-    "martes": [["19:00", "23:30"]],
-    "miercoles": [["19:00", "23:30"]],
-    "jueves": [["19:00", "23:30"]],
-    "viernes": [["19:00", "00:30"]],
-    "sabado": [["12:00", "15:00"], ["19:00", "00:30"]],
-    "domingo": [["19:00", "23:30"]]
+    "martes": [["20:00", "00:00"]],
+    "miercoles": [["20:00", "00:00"]],
+    "jueves": [["20:00", "00:00"]],
+    "viernes": [["20:00", "00:00"]],
+    "sabado": [["20:00", "00:00"]],
+    "domingo": [["20:00", "00:00"]]
   },
   "demoraMostrador": "20 a 30 minutos",
   "demoraDelivery": "35 a 50 minutos",
