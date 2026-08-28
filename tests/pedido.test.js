@@ -17,6 +17,19 @@ test('interpreta varios productos en un mismo mensaje', () => {
   assert.deepEqual(reconocidos.map((i) => [i.id, i.cantidad]), [['muzzarella', 2], ['gaseosa-15', 1]]);
 });
 
+test('encuentra la cantidad aunque venga tapada por muletillas', () => {
+  assert.deepEqual(separarCantidad('dale, quiero pedir 2 muzzarella'), { cantidad: 2, resto: 'muzzarella' });
+  assert.equal(interpretar('hola quiero 3 empanadas de carne').reconocidos[0].cantidad, 3);
+  assert.equal(interpretar('me mandas 2 napolitanas porfa').reconocidos[0].cantidad, 2);
+
+  const { reconocidos } = interpretar('dale, quiero pedir 2 muzzarella y una coca grande');
+  assert.deepEqual(reconocidos.map((i) => [i.id, i.cantidad]), [['muzzarella', 2], ['gaseosa-15', 1]]);
+});
+
+test('sacar muletillas no rompe los nombres con números', () => {
+  assert.equal(interpretar('gaseosa 1.5').reconocidos[0].id, 'gaseosa-15');
+});
+
 test('no rompe los productos que llevan "y" en el nombre', () => {
   const { reconocidos } = interpretar('1 jamón y morrones');
   assert.equal(reconocidos.length, 1);

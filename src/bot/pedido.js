@@ -12,6 +12,27 @@ const PALABRAS_CANTIDAD = [...Object.keys(NUMEROS), 'media', 'docena'];
 const INICIO_CANTIDAD = new RegExp(`\\s+y\\s+(?=\\d|${PALABRAS_CANTIDAD.join('\\s|')}\\s)`, 'g');
 
 /**
+ * Muletillas con las que la gente arranca el pedido y que tapan la cantidad:
+ * "dale, quiero pedir 2 muzzarella" tiene que leerse como "2 muzzarella".
+ */
+const RELLENO = new Set([
+  'hola', 'buenas', 'dale', 'ok', 'listo', 'porfa', 'porfavor', 'por', 'favor', 'gracias',
+  'y', 'e', 'tambien', 'ademas', 'mas', 'otra', 'otro',
+  'quiero', 'querria', 'quisiera', 'necesito', 'deseo', 'va', 'van', 'seria', 'serian',
+  'me', 'te', 'le', 'das', 'dame', 'da', 'mandas', 'manda', 'mandame', 'traeme', 'trae',
+  'pedir', 'pedirte', 'pido', 'encargar', 'ordenar', 'agregar', 'agregame', 'sumame',
+  'anotame', 'anota', 'poneme', 'pone', 'ponme', 'llevo', 'llevar', 'quisieramos',
+  'para', 'pa', 'del', 'el', 'la', 'los', 'las', 'lo', 'de', 'en', 'con', 'a',
+]);
+
+/** Saca las muletillas del principio para dejar a la vista la cantidad. */
+function sacarRelleno(normal) {
+  const partes = normal.split(' ');
+  while (partes.length > 1 && RELLENO.has(partes[0])) partes.shift();
+  return partes.join(' ');
+}
+
+/**
  * Parte lo que escribió el cliente en pedazos, uno por producto.
  * Corta por comas, saltos de línea y "+", y por " y " sólo cuando lo que sigue
  * arranca con una cantidad (para no romper "jamón y morrones").
@@ -26,7 +47,7 @@ export function partirEnLineas(texto) {
 
 /** Separa "2 muzzarella" en { cantidad: 2, resto: 'muzzarella' }. */
 export function separarCantidad(linea) {
-  const normal = normalizar(linea);
+  const normal = sacarRelleno(normalizar(linea));
   const tope = (n) => Math.min(Math.max(n, 1), 99);
 
   // docenas: "una docena de empanadas", "media docena de...", "2 docenas de..."
