@@ -1,48 +1,47 @@
 {
+  "_pendiente": "FALTAN los precios de las pizzas de 42 cm y 52 cm. Falta también el precio de la VASCA en 32 cm (en el flyer figura S/C). Si venden bebidas, empanadas o postres, hay que agregar esas categorías.",
+  "tamanos": [
+    {
+      "id": "individual",
+      "nombre": "Individual",
+      "detalle": "para 1 persona",
+      "alias": ["individual", "individuales", "personal", "chica", "chicas", "para uno", "para 1", "1 persona", "una persona"]
+    },
+    {
+      "id": "32",
+      "nombre": "32 cm",
+      "detalle": "para 2 personas",
+      "alias": ["32", "32 cm", "treinta y dos", "mediana", "medianas", "para dos", "para 2", "2 personas", "dos personas"]
+    }
+  ],
   "categorias": [
     {
       "id": "pizzas",
-      "nombre": "Pizzas",
+      "nombre": "Pizzas a la piedra",
+      "porTamano": true,
       "items": [
-        { "id": "muzzarella", "nombre": "Muzzarella", "descripcion": "Salsa, muzzarella y aceitunas", "precio": 7500, "alias": ["muza", "mozzarella", "muzza"], "aptoVegetariano": true },
-        { "id": "napolitana", "nombre": "Napolitana", "descripcion": "Muzzarella, tomate y ajo", "precio": 8500, "alias": ["napo"], "aptoVegetariano": true },
-        { "id": "fugazzeta", "nombre": "Fugazzeta", "descripcion": "Cebolla y muzzarella", "precio": 8900, "alias": ["fugaza", "fugazeta"], "aptoVegetariano": true },
-        { "id": "calabresa", "nombre": "Calabresa", "descripcion": "Muzzarella y longaniza calabresa", "precio": 9200, "alias": ["calabresa picante"] },
-        { "id": "jamon-morrones", "nombre": "Jamón y morrones", "descripcion": "Muzzarella, jamón cocido y morrones", "precio": 9500, "alias": ["jamon", "jyq", "jamon y morron"] },
-        { "id": "cuatro-quesos", "nombre": "Cuatro quesos", "descripcion": "Muzzarella, roquefort, provolone y parmesano", "precio": 10500, "alias": ["4 quesos"], "aptoVegetariano": true },
-        { "id": "especial-casa", "nombre": "Especial de la casa", "descripcion": "Muzzarella, jamón crudo, rúcula y parmesano", "precio": 11500, "alias": ["especial", "de la casa"] }
-      ]
-    },
-    {
-      "id": "empanadas",
-      "nombre": "Empanadas (unidad)",
-      "items": [
-        { "id": "emp-carne", "nombre": "Empanada de carne", "descripcion": "Carne cortada a cuchillo", "precio": 1400, "alias": ["empanada carne"] },
-        { "id": "emp-jyq", "nombre": "Empanada de jamón y queso", "descripcion": "", "precio": 1400, "alias": ["empanada jamon y queso", "jyq"] },
-        { "id": "emp-verdura", "nombre": "Empanada de verdura", "descripcion": "Acelga y salsa blanca", "precio": 1400, "alias": ["empanada verdura"], "aptoVegetariano": true }
-      ]
-    },
-    {
-      "id": "bebidas",
-      "nombre": "Bebidas",
-      "items": [
-        { "id": "gaseosa-15", "nombre": "Gaseosa 1.5 L", "descripcion": "Línea Coca-Cola", "precio": 3200, "alias": ["coca", "gaseosa grande", "sprite", "fanta"] },
-        { "id": "gaseosa-lata", "nombre": "Gaseosa lata", "descripcion": "354 ml", "precio": 1800, "alias": ["lata"] },
-        { "id": "cerveza", "nombre": "Cerveza 1 L", "descripcion": "Rubia", "precio": 4200, "alias": ["birra", "quilmes"] },
-        { "id": "agua", "nombre": "Agua 500 ml", "descripcion": "Con o sin gas", "precio": 1500, "alias": ["agua mineral"] }
-      ]
-    },
-    {
-      "id": "postres",
-      "nombre": "Postres",
-      "items": [
-        { "id": "flan", "nombre": "Flan casero", "descripcion": "Con dulce de leche o crema", "precio": 3500, "alias": [] },
-        { "id": "tiramisu", "nombre": "Tiramisú", "descripcion": "Porción individual", "precio": 4500, "alias": ["tiramisu"] }
+        { "id": "muzzarella", "nombre": "Muzzarella", "descripcion": "Muzzarella, orégano y aceitunas", "precios": { "individual": 14500, "32": 23800 }, "alias": ["muza", "muzza", "mozzarella", "mozarella", "muzarela"], "aptoVegetariano": true },
+        { "id": "fugazzeta", "nombre": "Fugazzeta", "descripcion": "Muzzarella, cebolla cruda, orégano y aceitunas", "precios": { "individual": 14500, "32": 24200 }, "alias": ["fugazeta", "fugasseta", "fugazzetta"], "aptoVegetariano": true },
+        { "id": "napolitana", "nombre": "Napolitana", "descripcion": "Muzzarella, jamón, tomate, pesto con ajo, orégano y aceitunas", "precios": { "individual": 18000, "32": 30000 }, "alias": ["napo", "napolitanas"] },
+        { "id": "anchoas", "nombre": "Anchoas", "descripcion": "Muzzarella, anchoas, orégano y aceitunas", "precios": { "individual": 17500, "32": 28900 }, "alias": ["anchoa", "de anchoas"] },
+        { "id": "champignon", "nombre": "Champignon", "descripcion": "Muzzarella, jamón, champiñones, morrón, orégano y aceitunas", "precios": { "individual": 18500, "32": 30500 }, "alias": ["champiñon", "champiñones", "champignones", "hongos"] },
+        { "id": "vasca", "nombre": "Vasca", "descripcion": "Muzzarella, pollo desmenuzado, barbacoa, verdeo, orégano y aceitunas", "precios": { "individual": 17500, "32": null }, "alias": ["de pollo", "pollo barbacoa", "bbq"] },
+        { "id": "bondiola", "nombre": "Bondiola", "descripcion": "Muzzarella, bondiola, tomates confitados, orégano y aceitunas", "precios": { "individual": 18000, "32": 30200 }, "alias": ["de bondiola"] },
+        { "id": "carioca", "nombre": "Carioca", "descripcion": "Muzzarella, jamón, ananá, azúcar negra y aceitunas", "precios": { "individual": 18500, "32": 26000 }, "alias": ["ananá", "anana", "con anana"] },
+        { "id": "cuatro-quesos", "nombre": "Cuatro quesos", "descripcion": "Muzzarella, roquefort, sardo, cheddar, orégano y aceitunas", "precios": { "individual": 16000, "32": 26300 }, "alias": ["4 quesos", "cuatroquesos", "de quesos"], "aptoVegetariano": true },
+        { "id": "rucula", "nombre": "Rúcula", "descripcion": "Muzzarella, rúcula, jamón crudo, sardo, orégano y aceitunas", "precios": { "individual": 17000, "32": 28200 }, "alias": ["rucula", "de rucula", "con rucula"] },
+        { "id": "chancha", "nombre": "Chancha", "descripcion": "Muzzarella, huevos revueltos, panceta, orégano y aceitunas", "precios": { "individual": 18000, "32": 29800 }, "alias": ["la chancha"] },
+        { "id": "pepperoni", "nombre": "Pepperoni", "descripcion": "Muzzarella, pepperoni, orégano y aceitunas", "precios": { "individual": 16500, "32": 27800 }, "alias": ["peperoni", "pepperonni", "salame picante"] },
+        { "id": "especial", "nombre": "Especial", "descripcion": "Muzzarella, jamón, morrón rojo, huevo rallado, orégano y aceitunas", "precios": { "individual": 17000, "32": 28600 }, "alias": ["la especial", "especiales"] },
+        { "id": "panceta", "nombre": "Panceta", "descripcion": "Muzzarella, jamón, panceta, orégano y aceitunas", "precios": { "individual": 18000, "32": 29700 }, "alias": ["con panceta", "bacon"] },
+        { "id": "vikinga", "nombre": "Vikinga", "descripcion": "Muzzarella, berenjena al escabeche, jamón crudo, orégano y aceitunas", "precios": { "individual": 17000, "32": 28200 }, "alias": ["la vikinga", "berenjena"] },
+        { "id": "atun", "nombre": "Atún", "descripcion": "Muzzarella, atún, morrón rojo, verdeo, orégano y aceitunas", "precios": { "individual": 15500, "32": 26000 }, "alias": ["atun", "de atun"] },
+        { "id": "palmitos", "nombre": "Palmitos", "descripcion": "Muzzarella, jamón, palmitos, morrón rojo, salsa golf y aceitunas", "precios": { "individual": 18500, "32": 30900 }, "alias": ["palmito", "con palmitos"] },
+        { "id": "superchancha", "nombre": "Superchancha", "descripcion": "Muzzarella, huevos revueltos, panceta, roquefort, cebolla, orégano y aceitunas", "precios": { "individual": 19500, "32": 30200 }, "alias": ["super chancha", "la superchancha"] },
+        { "id": "jamon-queso", "nombre": "Jamón y queso", "descripcion": "Muzzarella, jamón, orégano y aceitunas", "precios": { "individual": 15500, "32": 25600 }, "alias": ["jamon y queso", "jyq", "de jamon", "con jamon"] },
+        { "id": "fugazza", "nombre": "Fugazza", "descripcion": "Cebolla cruda, sardo, orégano y aceitunas (sin salsa y sin muzzarella)", "precios": { "individual": 14500, "32": 23800 }, "alias": ["fugasa", "fugaza"], "aptoVegetariano": true }
       ]
     }
   ],
-  "promos": [
-    { "id": "promo-martes", "nombre": "Martes de muzza", "descripcion": "2 pizzas de muzzarella", "precio": 12500, "dias": ["martes"] },
-    { "id": "promo-familiar", "nombre": "Combo familiar", "descripcion": "2 pizzas grandes + 12 empanadas + gaseosa 1.5 L", "precio": 32000, "dias": [] }
-  ]
+  "promos": []
 }

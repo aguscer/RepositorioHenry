@@ -17,9 +17,10 @@ Cliente por WhatsApp ──► Webhook ──► Bot ──┬─► responde la
 **El bot, solo:**
 - Responde las preguntas frecuentes (`src/data/faqs.json`), con horarios que se
   calculan de verdad: sabe si el local está abierto ahora y a qué hora abre.
-- Muestra la carta y los precios desde `src/data/menu.json`.
-- Toma el pedido en lenguaje natural: entiende *"2 muzzarella y una coca"*,
-  *"una docena de empanadas de carne"*, *"1 jamón y morrones"*.
+- Muestra la carta con los precios de cada tamaño desde `src/data/menu.json`, y explica qué lleva cada pizza si le preguntás por una.
+- Toma el pedido en lenguaje natural: entiende *"2 muzzarella 32"*,
+  *"una vikinga individual"*, *"3 fugazza 32 y una chancha individual"*.
+- Si no le dicen el tamaño, lo pregunta antes de poner un precio.
 - Pregunta delivery o retiro, dirección, nombre y medio de pago; calcula el
   envío según la zona y avisa si no llega al mínimo.
 - Muestra el resumen con el total y pide confirmación.
@@ -90,13 +91,13 @@ Casi todo se cambia editando JSON, sin tocar código:
 | Archivo | Qué configura |
 |---|---|
 | `src/data/negocio.json` | Nombre, dirección, teléfono, horarios, zonas de envío y costos, mínimo de delivery, medios de pago, demoras |
-| `src/data/menu.json` | Productos, precios, alias (cómo los escribe la gente) y promos |
+| `src/data/menu.json` | Tamaños, productos, precio por tamaño, alias (cómo los escribe la gente) y promos |
 | `src/data/faqs.json` | Preguntas frecuentes: palabras clave y respuesta |
 
 En las respuestas de las FAQs se pueden usar marcadores que se completan solos:
 `{{nombre}}`, `{{direccion}}`, `{{telefono}}`, `{{horarios}}`, `{{estadoActual}}`,
 `{{menu}}`, `{{promos}}`, `{{zonas}}`, `{{mediosPago}}`, `{{minimoDelivery}}`,
-`{{demoraMostrador}}`, `{{demoraDelivery}}`.
+`{{demoraMostrador}}`, `{{demoraDelivery}}`, `{{vegetarianas}}`.
 
 Los **alias** del menú son importantes: cuantos más pongas (`muza`, `napo`,
 `birra`), mejor entiende el bot lo que le escriben.
@@ -125,7 +126,7 @@ src/
     cloudApi.js         proveedor oficial de Meta
     mock.js             simulador para desarrollo
 public/                 panel de caja y simulador
-tests/                  44 pruebas automáticas
+tests/                  51 pruebas automáticas
 ```
 
 Los datos se guardan en archivos JSON dentro de `datos/` (se crea solo). Para

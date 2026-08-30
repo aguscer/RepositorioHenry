@@ -4,7 +4,7 @@ import * as avisos from '../store/avisos.js';
 import * as borradores from './pedido.js';
 import * as faq from './faq.js';
 import { detectar } from './intenciones.js';
-import { negocio, textoMenu } from './catalogo.js';
+import { negocio, textoMenu, textoTamanos, textoItem, buscarItem, buscarTamano } from './catalogo.js';
 import { estaAbierto, estadoEnTexto } from '../lib/horarios.js';
 import { puntajeContra, esAfirmativo, esNegativo, normalizar } from '../lib/texto.js';
 import { precio } from '../lib/formato.js';
@@ -14,6 +14,7 @@ const { ESTADOS } = sesiones;
 
 const PREGUNTAS = {
   [ESTADOS.PIDIENDO_ITEMS]: '¿Qué más te sumo? Cuando termines escribime *listo*.',
+  [ESTADOS.PIDIENDO_TAMANO]: `¿De qué tamaño? ${textoTamanos()}`,
   [ESTADOS.PIDIENDO_MODALIDAD]: '¿Es para *delivery* 🛵 o lo *retirás* por el local 🏠?',
   [ESTADOS.PIDIENDO_DIRECCION]: 'Pasame la *dirección* con calle, número y barrio 📍',
   [ESTADOS.PIDIENDO_NOMBRE]: '¿A nombre de quién lo anoto? 🙂',
@@ -21,8 +22,8 @@ const PREGUNTAS = {
   [ESTADOS.CONFIRMANDO]: '¿Confirmo el pedido? Respondeme *sí* o *no*.',
 };
 
-const AVISO_CERRADO = () =>
-  `⚠️ Ojo: ${estadoEnTexto(negocio, new Date()).replace(/^🔴 /, '')} ` +
+const AVISO_CERRADO = (fecha) =>
+  `⚠️ Ojo: ${estadoEnTexto(negocio, fecha).replace(/^🔴 /, '')} ` +
   'Igual te tomo el pedido y la caja lo va a ver apenas abramos.';
 
 function textoBienvenidaPedido() {
@@ -114,7 +115,16 @@ function manejar(sesion, texto, respuestas, fecha) {
     return { faq: respuestaFaq.id };
   }
 
-  // 5. No entendimos.
+  // 5. ¿Está preguntando por una pizza en particular?
+  const producto = buscarItem(texto, 0.75);
+  if (producto) {
+    sesion.fallosSeguidos = 0;
+    respuestas.push(textoItem(producto.item));
+    respuestas.push('¿Te la anoto? Escribime *quiero pedir* 😉');
+    return { producto: producto.item.id };
+  }
+
+  // 6. No entendimos.
   return noEntendi(sesion, texto, respuestas);
 }
 
@@ -130,14 +140,14 @@ function iniciarPedido(sesion, texto, respuestas, fecha) {
   sesion.fallosSeguidos = 0;
   sesion.borrador = { items: [], modalidad: null, direccion: '', zona: null, pago: '', notas: '' };
 
-  if (!estaAbierto(negocio, fecha)) respuestas.push(AVISO_CERRADO());
+  if (!estaAbierto(negocio, fecha)) respuestas.push(AVISO_CERRADO(fecha));
 
   // Si ya dijo qué quiere ("quiero 2 muzzarellas"), lo anotamos de una.
   const { reconocidos } = borradores.interpretar(texto);
   if (reconocidos.length) {
     for (const item of reconocidos) borradores.agregarItem(sesion.borrador, item);
     respuestas.push(`Anotado 📝\n\n${borradores.resumen(sesion.borrador, { conTotales: false })}`);
-    respuestas.push(PREGUNTAS[ESTADOS.PIDIENDO_ITEMS]);
+    respuestas.push(seguirDespuesDeAnotar(sesion));
   } else {
     respuestas.push(textoBienvenidaPedido());
   }
@@ -147,6 +157,7 @@ function iniciarPedido(sesion, texto, respuestas, fecha) {
 function avanzarPedido(sesion, texto, respuestas, fecha) {
   switch (sesion.estado) {
     case ESTADOS.PIDIENDO_ITEMS: return pasoItems(sesion, texto, respuestas);
+    case ESTADOS.PIDIENDO_TAMANO: return pasoTamano(sesion, texto, respuestas);
     case ESTADOS.PIDIENDO_MODALIDAD: return pasoModalidad(sesion, texto, respuestas);
     case ESTADOS.PIDIENDO_DIRECCION: return pasoDireccion(sesion, texto, respuestas);
     case ESTADOS.PIDIENDO_NOMBRE: return pasoNombre(sesion, texto, respuestas);
@@ -171,6 +182,10 @@ function pasoItems(sesion, texto, respuestas) {
       respuestas.push('Todavía no anoté nada 🤔 Decime qué querés pedir, o escribime *menú* para ver la carta.');
       return {};
     }
+    if (borradores.itemsSinTamano(sesion.borrador).length) {
+      respuestas.push(preguntarTamano(sesion));
+      return {};
+    }
     sesion.estado = ESTADOS.PIDIENDO_MODALIDAD;
     respuestas.push(`Perfecto, te leo el pedido:\n\n${borradores.resumen(sesion.borrador, { conTotales: false })}`);
     respuestas.push(PREGUNTAS[ESTADOS.PIDIENDO_MODALIDAD]);
@@ -182,7 +197,7 @@ function pasoItems(sesion, texto, respuestas) {
     if (dudosos.length) {
       respuestas.push(`De esto no estoy seguro: *${dudosos.join('*, *')}*. ¿Me lo escribís como figura en la carta?`);
     }
-    respuestas.push(PREGUNTAS[ESTADOS.PIDIENDO_ITEMS]);
+    respuestas.push(seguirDespuesDeAnotar(sesion));
     return {};
   }
 
@@ -192,6 +207,37 @@ function pasoItems(sesion, texto, respuestas) {
   }
   respuestas.push('Mmm, eso no lo encontré en la carta 😅 Escribime *menú* para verla, ' +
     'o decime el producto con la cantidad (ej: *2 muzzarella*).');
+  return {};
+}
+
+/** ¿Seguimos sumando productos, o falta elegir el tamaño de alguno? */
+function seguirDespuesDeAnotar(sesion) {
+  if (borradores.itemsSinTamano(sesion.borrador).length) return preguntarTamano(sesion);
+  sesion.estado = ESTADOS.PIDIENDO_ITEMS;
+  return PREGUNTAS[ESTADOS.PIDIENDO_ITEMS];
+}
+
+function preguntarTamano(sesion) {
+  const pendientes = borradores.itemsSinTamano(sesion.borrador);
+  sesion.estado = ESTADOS.PIDIENDO_TAMANO;
+
+  const cuales = pendientes.length === 1
+    ? `la *${pendientes[0].nombre}*`
+    : `las que te anoté (${pendientes.map((i) => i.nombre).join(', ')})`;
+  return `¿De qué tamaño querés ${cuales}?\n${textoTamanos()}`;
+}
+
+function pasoTamano(sesion, texto, respuestas) {
+  const tamano = buscarTamano(texto);
+  if (!tamano) {
+    respuestas.push(`No me quedó claro el tamaño 🤔 Tenemos ${textoTamanos()}.`);
+    return {};
+  }
+
+  borradores.aplicarTamano(sesion.borrador, tamano);
+  sesion.estado = ESTADOS.PIDIENDO_ITEMS;
+  respuestas.push(`Listo, ${tamano.nombre} 👍\n\n${borradores.resumen(sesion.borrador, { conTotales: false })}`);
+  respuestas.push(PREGUNTAS[ESTADOS.PIDIENDO_ITEMS]);
   return {};
 }
 

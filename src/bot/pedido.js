@@ -1,4 +1,4 @@
-import { buscarItem, buscarZona, negocio } from './catalogo.js';
+import { buscarItem, buscarTamano, buscarZona, itemPorId, precioDe, tamanoPorId, negocio } from './catalogo.js';
 import { normalizar } from '../lib/texto.js';
 import { precio } from '../lib/formato.js';
 
@@ -70,6 +70,22 @@ export function separarCantidad(linea) {
   return { cantidad: 1, resto: normal };
 }
 
+/** Arma la línea del pedido con el precio que corresponde al tamaño elegido. */
+function armarItem(item, cantidad, tamano) {
+  const tamanoId = tamano?.id || null;
+  const valor = tamanoId || !item.porTamano ? precioDe(item, tamanoId) : null;
+
+  return {
+    id: item.id,
+    nombre: item.nombre,
+    cantidad,
+    tamano: tamanoId,
+    tamanoNombre: tamano?.nombre || '',
+    porTamano: Boolean(item.porTamano),
+    precioUnitario: valor,
+  };
+}
+
 /**
  * Interpreta un mensaje de pedido.
  * Devuelve lo que reconoció y lo que no, para poder repreguntar.
@@ -84,12 +100,7 @@ export function interpretar(texto) {
 
     const encontrado = buscarItem(resto);
     if (encontrado) {
-      reconocidos.push({
-        id: encontrado.item.id,
-        nombre: encontrado.item.nombre,
-        precioUnitario: encontrado.item.precio,
-        cantidad,
-      });
+      reconocidos.push(armarItem(encontrado.item, cantidad, buscarTamano(resto)));
     } else {
       dudosos.push(linea.trim());
     }
@@ -97,9 +108,9 @@ export function interpretar(texto) {
   return { reconocidos, dudosos };
 }
 
-/** Suma un item al borrador, agrupando repetidos. */
+/** Suma un item al borrador, agrupando los repetidos del mismo tamaño. */
 export function agregarItem(borrador, nuevo) {
-  const existente = borrador.items.find((i) => i.id === nuevo.id);
+  const existente = borrador.items.find((i) => i.id === nuevo.id && i.tamano === nuevo.tamano);
   if (existente) existente.cantidad += nuevo.cantidad;
   else borrador.items.push({ ...nuevo });
   return borrador;
@@ -110,10 +121,29 @@ export function quitarItem(borrador, id) {
   return borrador;
 }
 
+/** Items a los que todavía les falta elegir el tamaño. */
+export function itemsSinTamano(borrador) {
+  return borrador.items.filter((i) => i.porTamano && !i.tamano);
+}
+
+/** Aplica un tamaño a todos los items que estaban esperando uno. */
+export function aplicarTamano(borrador, tamano) {
+  for (const item of itemsSinTamano(borrador)) {
+    item.tamano = tamano.id;
+    item.tamanoNombre = tamano.nombre;
+    item.precioUnitario = precioDe(itemPorId(item.id), tamano.id);
+  }
+  return borrador;
+}
+
 export function calcularTotales(borrador) {
-  const subtotal = borrador.items.reduce((suma, i) => suma + i.precioUnitario * i.cantidad, 0);
+  const subtotal = borrador.items.reduce(
+    (suma, i) => suma + (i.precioUnitario ?? 0) * i.cantidad, 0,
+  );
   const envio = borrador.modalidad === 'delivery' ? (borrador.zona?.costo ?? 0) : 0;
-  return { subtotal, envio, total: subtotal + envio };
+  const aConfirmar = borrador.items.filter((i) => i.precioUnitario === null).length;
+
+  return { subtotal, envio, total: subtotal + envio, aConfirmar };
 }
 
 /** ¿Llega al mínimo para que le lleven el pedido? */
@@ -126,15 +156,21 @@ export function detectarZona(direccion) {
   return buscarZona(direccion);
 }
 
+function lineaItem(item, moneda) {
+  const nombre = item.tamanoNombre ? `${item.nombre} (${item.tamanoNombre})` : item.nombre;
+  const detalle = item.precioUnitario === null
+    ? '_precio a confirmar_'
+    : precio(item.precioUnitario * item.cantidad, moneda);
+  return `• ${item.cantidad} x ${nombre} — ${detalle}`;
+}
+
 /** Detalle del pedido en texto, para el cliente y para la caja. */
 export function resumen(borrador, { conTotales = true } = {}) {
   const moneda = negocio.moneda;
-  const lineas = borrador.items.map(
-    (i) => `• ${i.cantidad} x ${i.nombre} — ${precio(i.precioUnitario * i.cantidad, moneda)}`,
-  );
+  const lineas = borrador.items.map((i) => lineaItem(i, moneda));
   if (!conTotales) return lineas.join('\n');
 
-  const { subtotal, envio, total } = calcularTotales(borrador);
+  const { subtotal, envio, total, aConfirmar } = calcularTotales(borrador);
   const extra = [];
   if (borrador.modalidad) {
     extra.push(borrador.modalidad === 'delivery'
@@ -147,6 +183,9 @@ export function resumen(borrador, { conTotales = true } = {}) {
   const totales = [`Subtotal: ${precio(subtotal, moneda)}`];
   if (envio) totales.push(`Envío: ${precio(envio, moneda)}`);
   totales.push(`*TOTAL: ${precio(total, moneda)}*`);
+  if (aConfirmar) totales.push('⚠️ Hay un producto sin precio en la lista: la caja te lo confirma.');
 
   return [lineas.join('\n'), extra.join('\n'), totales.join('\n')].filter(Boolean).join('\n\n');
 }
+
+export { tamanoPorId };

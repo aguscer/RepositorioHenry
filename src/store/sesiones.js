@@ -6,6 +6,7 @@ const coleccion = new Coleccion('sesiones', {});
 export const ESTADOS = {
   LIBRE: 'libre',
   PIDIENDO_ITEMS: 'pidiendo_items',
+  PIDIENDO_TAMANO: 'pidiendo_tamano',
   PIDIENDO_MODALIDAD: 'pidiendo_modalidad',
   PIDIENDO_DIRECCION: 'pidiendo_direccion',
   PIDIENDO_NOMBRE: 'pidiendo_nombre',
